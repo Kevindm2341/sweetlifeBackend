@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('registro')->group(function() {
     Route::get('/',[RegistroController::class, 'getAll']);
     Route::post('/',[RegistroController::class, 'crear']);
+    Route::get('/{id}',[RegistroController::class, 'obtenerHoraDia']);
     Route::put('/{id}',[RegistroController::class, 'modificar']);
 
 });

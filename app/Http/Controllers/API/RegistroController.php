@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Registro;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,6 +30,13 @@ class RegistroController extends Controller
             'success' => true
         ], 200);
     }
+    public function obtenerHoraDia($id){
+        $data = DB::table('registro')->get()->where('fecha', '=', Carbon::now()->format('Y-m-d'))
+            ->where('hora', Carbon::now()->format('H:00:00'));
+
+        return response()->json($data, 200);
+    }
+
     public function modificar(Request $request,$id){
         $data['fecha'] = $request['fecha'];
         $data['hora'] = $request['hora'];
