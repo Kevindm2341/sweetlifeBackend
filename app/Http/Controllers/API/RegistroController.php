@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class RegistroController extends Controller
 {
-    public function getAll(){
+    public function getAll()
+    {
         $data = DB::table('registro')->get()->where('fecha', '=', Carbon::now()->format('Y-m-d'));
         $data1 = array();
         foreach ($data as $data2) {
@@ -19,25 +20,33 @@ class RegistroController extends Controller
         };
         return response()->json($data1, 200);
     }
-    public function crear(Request $request){
-        $data['fecha'] = $request['fecha'];
-        $data['hora'] = $request['hora'];
-        $data['contador'] = $request['contador'];
-        Registro::create($data);
+    public function crear(Request $request)
+    {
+            $data['fecha'] = $request['fecha'];
+            $data['hora'] = $request['hora'];
+            $data['contador'] = $request['contador'];
+            Registro::create($data);
 
-        return response()->json([
-            'message' => "Successfully created",
-            'success' => true
-        ], 200);
+            return response()->json([
+                'message' => "Successfully created",
+                'success' => true
+            ], 200);
     }
-    public function obtenerHoraDia($id){
+    public function obtenerHoraDia($id)
+    {
         $data = DB::table('registro')->get()->where('fecha', '=', Carbon::now()->format('Y-m-d'))
             ->where('hora', Carbon::now()->format('H:00:00'));
-
-        return response()->json($data, 200);
+        $data1 = array();
+        foreach ($data as $data2) {
+            array_push($data1, $data2);
+        };
+        $registro = new Registro();
+        $registro = $data1[0];
+        return response()->json($registro, 200);
     }
 
-    public function modificar(Request $request,$id){
+    public function modificar(Request $request, $id)
+    {
         $data['fecha'] = $request['fecha'];
         $data['hora'] = $request['hora'];
         $data['contador'] = $request['contador'];
@@ -47,7 +56,8 @@ class RegistroController extends Controller
             'success' => true
         ], 200);
     }
-    public function horasDia() {
+    public function horasDia()
+    {
         return null;
     }
 }
